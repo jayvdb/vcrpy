@@ -208,7 +208,7 @@ class VCR(object):
         if filter_query_parameters:
             filter_functions.append(functools.partial(
                 filters.remove_query_parameters,
-               query_parameters_to_remove=filter_query_parameters
+                query_parameters_to_remove=filter_query_parameters
             ))
         if filter_post_data_parameters:
             filter_functions.append(

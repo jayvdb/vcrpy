@@ -35,11 +35,13 @@ def test_boto_medium_difficulty(tmpdir):
         k = Key(s3_bucket)
         k.key = 'test.txt'
         k.set_contents_from_string('hello world i am a string')
+        assert len(cass) == 1
 
     with vcr.use_cassette(str(tmpdir.join('boto-medium.yml'))) as cass:
         k = Key(s3_bucket)
         k.key = 'test.txt'
         k.set_contents_from_string('hello world i am a string')
+        assert len(cass) == 1
 
 
 def test_boto_hardcore_mode(tmpdir):
@@ -49,6 +51,7 @@ def test_boto_hardcore_mode(tmpdir):
         k = Key(s3_bucket)
         k.key = 'test.txt'
         k.set_contents_from_string('hello world i am a string')
+        assert len(cass) == 1
 
     with vcr.use_cassette(str(tmpdir.join('boto-hardcore.yml'))) as cass:
         s3_conn = S3Connection()
@@ -56,6 +59,7 @@ def test_boto_hardcore_mode(tmpdir):
         k = Key(s3_bucket)
         k.key = 'test.txt'
         k.set_contents_from_string('hello world i am a string')
+        assert len(cass) == 1
 
 
 def test_boto_iam(tmpdir):
@@ -71,7 +75,9 @@ def test_boto_iam(tmpdir):
     with vcr.use_cassette(str(tmpdir.join('boto-iam.yml'))) as cass:
         iam_conn = boto.iam.connect_to_region('universal')
         iam_conn.get_all_users()
+        assert len(cass) == 1
 
     with vcr.use_cassette(str(tmpdir.join('boto-iam.yml'))) as cass:
         iam_conn = boto.iam.connect_to_region('universal')
         iam_conn.get_all_users()
+        assert len(cass) == 1

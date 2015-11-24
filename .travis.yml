@@ -6,6 +6,7 @@ env:
     - secure: AifoKzwhjV94cmcQZrdQmqRu/9rkZZvWpwBv1daeAQpLOKFPGsOm3D+x2cSw9+iCfkgDZDfqQVv1kCaFVxTll8v8jTq5SJdqEY0NmGWbj/UkNtShh609oRDsuzLxAEwtVKYjf/h8K2BRea+bl1tGkwZ2vtmYS6dxNlAijjWOfds=
     - secure: LBSEg/gMj4u4Hrpo3zs6Y/1mTpd2RtcN49mZIFgTdbJ9IhpiNPqcEt647Lz94F9Eses2x2WbNuKqZKZZReY7QLbEzU1m0nN5jlaKrjcG5NR5clNABfFFyhgc0jBikyS4abAG8jc2efeaTrFuQwdoF4sE8YiVrkiVj2X5Xoi6sBk=
   matrix:
+    - FLAKE8=1
     - WITH_LIB="requests2.2"
     - WITH_LIB="requests2.3"
     - WITH_LIB="requests2.4"
@@ -36,7 +37,8 @@ python:
 - 3.4
 - pypy
 install:
-- pip install .
+- if [[ -n "$FLAKE8" ]]; then pip install flake8 ; fi
+- if [[ -z "$FLAKE8" ]]; then pip install . ; fi
 - if [ $WITH_LIB = "requests1.x" ] ; then pip install requests==1.2.3; fi
 - if [ $WITH_LIB = "requests2.2" ] ; then pip install requests==2.2.1; fi
 - if [ $WITH_LIB = "requests2.3" ] ; then pip install requests==2.3.0; fi
@@ -51,4 +53,6 @@ install:
 - if [ $WITH_LIB = "urllib31.10" ] ; then pip install certifi urllib3==1.10.2; fi
 - if [ $WITH_LIB = "tornado" ] ; then pip install tornado==4.2 pytest-tornado; fi
 - if [ $WITH_LIB = "tornado" -a $TRAVIS_PYTHON_VERSION != "pypy" ] ; then pip install pycurl; fi
-script: python setup.py test
+script:
+- if [[ -n "$FLAKE8" ]]; then pyflakes tests; flake8; fi
+- if [[ -z "$FLAKE8" ]]; then python setup.py test; fi

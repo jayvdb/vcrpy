@@ -24,9 +24,11 @@ def test_response_code(scheme, tmpdir):
     url = scheme + '://httpbin.org/'
     with vcr.use_cassette(str(tmpdir.join('atts.yaml'))) as cass:
         code = urlopen(url).getcode()
+        assert len(cass) == 1
 
     with vcr.use_cassette(str(tmpdir.join('atts.yaml'))) as cass:
         assert code == urlopen(url).getcode()
+        assert len(cass) == 1
 
 
 def test_random_body(scheme, tmpdir):
@@ -34,9 +36,11 @@ def test_random_body(scheme, tmpdir):
     url = scheme + '://httpbin.org/bytes/1024'
     with vcr.use_cassette(str(tmpdir.join('body.yaml'))) as cass:
         body = urlopen(url).read()
+        assert len(cass) == 1
 
     with vcr.use_cassette(str(tmpdir.join('body.yaml'))) as cass:
         assert body == urlopen(url).read()
+        assert len(cass) == 1
 
 
 def test_response_headers(scheme, tmpdir):
@@ -44,10 +48,14 @@ def test_response_headers(scheme, tmpdir):
     url = scheme + '://httpbin.org/'
     with vcr.use_cassette(str(tmpdir.join('headers.yaml'))) as cass:
         open1 = urlopen(url).info().items()
+        assert len(cass) == 1
 
     with vcr.use_cassette(str(tmpdir.join('headers.yaml'))) as cass:
         open2 = urlopen(url).info().items()
+        assert len(cass) == 1
+
         assert sorted(open1) == sorted(open2)
+
 
 def test_effective_url(scheme, tmpdir):
     '''Ensure that the effective_url is captured'''
@@ -55,9 +63,12 @@ def test_effective_url(scheme, tmpdir):
     with vcr.use_cassette(str(tmpdir.join('headers.yaml'))) as cass:
         effective_url = urlopen(url).geturl()
         assert effective_url == scheme + '://httpbin.org/html'
+        assert len(cass) == 2
 
     with vcr.use_cassette(str(tmpdir.join('headers.yaml'))) as cass:
         assert effective_url == urlopen(url).geturl()
+        assert len(cass) == 2
+
 
 def test_multiple_requests(scheme, tmpdir):
     '''Ensure that we can cache multiple requests'''
@@ -78,9 +89,11 @@ def test_get_data(scheme, tmpdir):
     url = scheme + '://httpbin.org/get?' + data
     with vcr.use_cassette(str(tmpdir.join('get_data.yaml'))) as cass:
         res1 = urlopen(url).read()
+        assert len(cass) == 1
 
     with vcr.use_cassette(str(tmpdir.join('get_data.yaml'))) as cass:
         res2 = urlopen(url).read()
+        assert len(cass) == 1
 
     assert res1 == res2
 
@@ -91,9 +104,11 @@ def test_post_data(scheme, tmpdir):
     url = scheme + '://httpbin.org/post'
     with vcr.use_cassette(str(tmpdir.join('post_data.yaml'))) as cass:
         res1 = urlopen(url, data).read()
+        assert len(cass) == 1
 
     with vcr.use_cassette(str(tmpdir.join('post_data.yaml'))) as cass:
         res2 = urlopen(url, data).read()
+        assert len(cass) == 1
 
     assert res1 == res2
     assert_cassette_has_one_response(cass)
@@ -105,8 +120,12 @@ def test_post_unicode_data(scheme, tmpdir):
     url = scheme + '://httpbin.org/post'
     with vcr.use_cassette(str(tmpdir.join('post_data.yaml'))) as cass:
         res1 = urlopen(url, data).read()
+        assert len(cass) == 1
+
     with vcr.use_cassette(str(tmpdir.join('post_data.yaml'))) as cass:
         res2 = urlopen(url, data).read()
+        assert len(cass) == 1
+
     assert res1 == res2
     assert_cassette_has_one_response(cass)
 
@@ -121,6 +140,7 @@ def test_cross_scheme(tmpdir):
         urlopen('http://httpbin.org/')
         assert len(cass) == 2
         assert cass.play_count == 0
+
 
 def test_decorator(scheme, tmpdir):
     '''Test the decorator version of VCR.py'''

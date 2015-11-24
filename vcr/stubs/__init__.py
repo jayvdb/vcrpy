@@ -1,15 +1,10 @@
 '''Stubs for patching HTTP and HTTPS requests'''
 
-try:
-    import http.client
-except ImportError:
-    pass
 import logging
 import six
 from six.moves.http_client import (
     HTTPConnection,
     HTTPSConnection,
-    HTTPMessage,
     HTTPResponse,
 )
 from six import BytesIO
@@ -306,7 +301,7 @@ class VCRConnection(object):
 
     def __init__(self, *args, **kwargs):
         if six.PY3:
-            kwargs.pop('strict', None) # apparently this is gone in py3
+            kwargs.pop('strict', None)  # apparently this is gone in py3
 
         # need to temporarily reset here because the real connection
         # inherits from the thing that we are mocking out.  Take out
@@ -330,8 +325,8 @@ class VCRConnection(object):
         try:
             setattr(self.real_connection, name, value)
         except AttributeError:
-             # raised if real_connection has not been set yet, such as when
-             # we're setting the real_connection itself for the first time
+            # raised if real_connection has not been set yet, such as when
+            # we're setting the real_connection itself for the first time
             pass
 
         super(VCRConnection, self).__setattr__(name, value)

@@ -39,7 +39,7 @@ def test_flickr_multipart_upload():
         h.request("POST", "/post/", headers=headers)
         h.send(body)
         r = h.getresponse()
-        data = r.read()
+        r.read()
         h.close()
 
     with vcr.use_cassette('fixtures/vcr_cassettes/flickr.yaml') as cass:
@@ -63,7 +63,7 @@ def test_cookies(tmpdir):
     testfile = str(tmpdir.join('cookies.yml'))
     with vcr.use_cassette(testfile):
         s = requests.Session()
-        r1 = s.get("http://httpbin.org/cookies/set?k1=v1&k2=v2")
+        s.get("http://httpbin.org/cookies/set?k1=v1&k2=v2")
         r2 = s.get("http://httpbin.org/cookies")
         assert len(r2.json()['cookies']) == 2
 
@@ -81,9 +81,8 @@ def test_xmlrpclib(tmpdir):
         roundup_server = xmlrpc_client.ServerProxy('http://bugs.python.org/xmlrpc', allow_none=True)
         original_schema = roundup_server.schema()
 
-    with vcr.use_cassette(str(tmpdir.join('xmlrpcvideo.yaml'))) as cassette:
+    with vcr.use_cassette(str(tmpdir.join('xmlrpcvideo.yaml'))):
         roundup_server = xmlrpc_client.ServerProxy('http://bugs.python.org/xmlrpc', allow_none=True)
         second_schema = roundup_server.schema()
 
     assert original_schema == second_schema
-
