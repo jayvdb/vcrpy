@@ -80,6 +80,6 @@ def test_deserialize_py2py3_yaml_cassette(tmpdir, req_body, expect):
 @mock.patch.object(jsonserializer.json, 'dumps',
                    side_effect=UnicodeDecodeError('utf-8', b'unicode error in serialization',
                                                   0, 10, 'blew up'))
-def test_serialize_constructs_UnicodeDecodeError(mock_dumps):
+def test_serialize_undecodable_unicode(mock_dumps):
     with pytest.raises(UnicodeDecodeError):
         jsonserializer.serialize({})

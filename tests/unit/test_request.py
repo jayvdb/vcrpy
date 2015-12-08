@@ -43,7 +43,7 @@ def test_uri():
     assert req.uri == 'http://go.com:80/'
 
 
-def test_HeadersDict():
+def test_headers_dict():
 
     # Simple test of CaseInsensitiveDict
     h = HeadersDict()

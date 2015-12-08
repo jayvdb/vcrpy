@@ -108,8 +108,8 @@ def auto_decorate(
 
     class DecorateAll(type):
 
-        def __setattr__(cls, attribute, value):
-            return super(DecorateAll, cls).__setattr__(
+        def __setattr__(self, attribute, value):
+            return super(DecorateAll, self).__setattr__(
                 attribute, maybe_decorate(attribute, value)
             )
 

@@ -30,6 +30,12 @@ try:
 except ImportError:
     from yaml import Loader
 
+_STRINGS_TO_NUKE = (
+    '!!python/object:vcr.request.Request',
+    '!!python/object/apply:__builtin__.frozenset',
+    '!!python/object/apply:builtins.frozenset',
+)
+
 
 def preprocess_yaml(cassette):
     # this is the hack that makes the whole thing work.  The old version used
@@ -37,12 +43,7 @@ def preprocess_yaml(cassette):
     # tag system.  This made it difficult to deserialize old cassettes on new
     # versions.  So this just strips the tags before deserializing.
 
-    STRINGS_TO_NUKE = [
-        '!!python/object:vcr.request.Request',
-        '!!python/object/apply:__builtin__.frozenset',
-        '!!python/object/apply:builtins.frozenset',
-    ]
-    for s in STRINGS_TO_NUKE:
+    for s in _STRINGS_TO_NUKE:
         cassette = cassette.replace(s, '')
     return cassette
 

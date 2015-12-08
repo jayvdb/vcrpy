@@ -175,16 +175,16 @@ def test_nesting_cassette_context_managers(*args):
 def test_nesting_context_managers_by_checking_references_of_http_connection():
     original = httplib.HTTPConnection
     with Cassette.use(path='test'):
-        first_cassette_HTTPConnection = httplib.HTTPConnection
+        first_cassette_http_connection = httplib.HTTPConnection
         with Cassette.use(path='test'):
-            second_cassette_HTTPConnection = httplib.HTTPConnection
-            assert second_cassette_HTTPConnection is not first_cassette_HTTPConnection
+            second_cassette_http_connection = httplib.HTTPConnection
+            assert second_cassette_http_connection is not first_cassette_http_connection
             with Cassette.use(path='test'):
-                assert httplib.HTTPConnection is not second_cassette_HTTPConnection
+                assert httplib.HTTPConnection is not second_cassette_http_connection
                 with force_reset():
                     assert httplib.HTTPConnection is original
-            assert httplib.HTTPConnection is second_cassette_HTTPConnection
-        assert httplib.HTTPConnection is first_cassette_HTTPConnection
+            assert httplib.HTTPConnection is second_cassette_http_connection
+        assert httplib.HTTPConnection is first_cassette_http_connection
 
 
 def test_custom_patchers():
@@ -249,7 +249,7 @@ def test_path_transformer_with_context_manager():
         assert cassette._path == 'a'
 
 
-def test_path_transformer_None():
+def test_path_transformer_none():
     with Cassette.use(
         path='a', path_transformer=None,
     ) as cassette:
