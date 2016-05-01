@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from six import BytesIO
 from vcr.filters import (
     remove_headers, replace_headers,

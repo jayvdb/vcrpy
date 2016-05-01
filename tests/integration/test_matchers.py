@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import vcr
 import pytest
 from six.moves.urllib.request import urlopen

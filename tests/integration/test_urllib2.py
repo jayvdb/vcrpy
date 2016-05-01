@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 '''Integration tests with urllib2'''
 
+from __future__ import unicode_literals
+
 from six.moves.urllib.request import urlopen
 from six.moves.urllib_parse import urlencode
 import pytest_httpbin.certs

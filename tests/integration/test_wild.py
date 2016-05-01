@@ -1,4 +1,7 @@
+from __future__ import unicode_literals
+
 import pytest
+
 from six.moves import xmlrpc_client
 
 requests = pytest.importorskip("requests")
