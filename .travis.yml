@@ -37,6 +37,7 @@ python:
 - 3.3
 - 3.4
 - pypy
+- pypy3
 install:
 - pip install tox-travis
 - if [[ $TOX_SUFFIX != 'flakes' ]]; then python setup.py install ; fi
