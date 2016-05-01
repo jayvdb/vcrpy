@@ -34,15 +34,10 @@ matrix:
     - env: TOX_SUFFIX="requests1"
       python: 3.5
 python:
-- 2.6
-- 2.7
-- 3.3
-- 3.4
-- 3.5
-- pypy
-- pypy3
+- 3.2
 install:
 - pip install tox-travis
+- if [[ "$TRAVIS_PYTHON_VERSION" == "3.2" ]]; then pip install 'virtualenv<14' ; fi
 - if [[ $TOX_SUFFIX != 'flakes' ]]; then python setup.py install ; fi
 script:
 - tox -e "${TOX_SUFFIX}"
