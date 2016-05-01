@@ -251,7 +251,7 @@ def test_decode_response_gzip():
     body = b'gzip message'
 
     buf = BytesIO()
-    f = gzip.GzipFile('a', fileobj=buf, mode='wb')
+    f = gzip.GzipFile(str('a'), fileobj=buf, mode=str('wb'))
     f.write(body)
     f.close()
 
