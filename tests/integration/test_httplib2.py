@@ -114,7 +114,7 @@ def test_post_data(scheme, tmpdir):
 
 def test_post_unicode_data(scheme, tmpdir):
     '''Ensure that it works when posting unicode data'''
-    data = urlencode({'snowman': u'☃'.encode('utf-8')})
+    data = urlencode({'snowman': '☃'.encode('utf-8')})
     url = scheme + '://httpbin.org/post'
     with vcr.use_cassette(str(tmpdir.join('post_data.yaml'))):
         _, res1 = httplib2.Http().request(url, "POST", data)
