@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 '''Integration tests with httplib2'''
 
+from __future__ import unicode_literals
+
 # External imports
 from six.moves.urllib_parse import urlencode
 import pytest

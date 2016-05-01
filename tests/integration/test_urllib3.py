@@ -1,8 +1,10 @@
+# coding=utf-8
 '''Integration tests with urllib3'''
 
-# coding=utf-8
+from __future__ import unicode_literals
 
 import pytest
+
 import vcr
 from assertions import assert_cassette_empty, assert_is_json
 certifi = pytest.importorskip("certifi")

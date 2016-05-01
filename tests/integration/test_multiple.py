@@ -1,4 +1,7 @@
+from __future__ import unicode_literals
+
 import pytest
+
 import vcr
 from six.moves.urllib.request import urlopen
 

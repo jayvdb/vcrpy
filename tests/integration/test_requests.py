@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 '''Test requests' interaction with vcr'''
+
+from __future__ import unicode_literals
+
 import pytest
 import vcr
 from assertions import assert_cassette_empty, assert_is_json

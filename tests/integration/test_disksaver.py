@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 '''Basic tests about save behavior'''
 
+from __future__ import unicode_literals
+
 # External imports
 import os
 import time

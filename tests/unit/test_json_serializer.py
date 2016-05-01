@@ -1,4 +1,7 @@
+from __future__ import unicode_literals
+
 import pytest
+
 from vcr.serializers.jsonserializer import serialize
 from vcr.request import Request
 
